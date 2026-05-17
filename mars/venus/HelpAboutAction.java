@@ -3,6 +3,7 @@
    import java.awt.*;
    import java.awt.event.*;
    import javax.swing.*;
+   import mars.util.IconLoader;
 	
 	/*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
@@ -56,6 +57,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 							  "Java Examples in a Nutshell 3rd Edition, O'Reilly, ISBN 0-596-00620-9.",
 							  "About Mars",
 							  JOptionPane.INFORMATION_MESSAGE,
-							  new ImageIcon("images/RedMars50.gif"));
+							  IconLoader.loadIcon("images/RedMars50.gif"));
       }
+
+
    }

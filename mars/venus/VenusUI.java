@@ -7,7 +7,7 @@
    import javax.swing.event.*;
    import java.io.*;
    import java.net.*;
-
+   import mars.util.IconLoader;
 /*
 Copyright (c) 2003-2013,  Pete Sanderson and Kenneth Vollmar
 
@@ -242,12 +242,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          Class cs = this.getClass(); 
          try {
             fileNewAction = new FileNewAction("New", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"New22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"New22.png")),
                                             "Create a new file for editing", KeyEvent.VK_N,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_N, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
                									  mainUI);		
             fileOpenAction = new FileOpenAction("Open ...", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Open22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Open22.png")),
                									  "Open a file for editing", KeyEvent.VK_O,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_O, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
                									  mainUI);	
@@ -259,96 +259,96 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                             "Close all open files", KeyEvent.VK_L,
                									  null, mainUI);	
             fileSaveAction = new FileSaveAction("Save", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Save22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Save22.png")),
                									  "Save the current file", KeyEvent.VK_S,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
                									  mainUI);	
             fileSaveAsAction = new FileSaveAsAction("Save as ...", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"SaveAs22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"SaveAs22.png")),
                									  "Save current file with different name", KeyEvent.VK_A,
                									  null, mainUI);	
             fileSaveAllAction = new FileSaveAllAction("Save All", null,
                                             "Save all open files", KeyEvent.VK_V,
                									  null, mainUI);	
             fileDumpMemoryAction = new FileDumpMemoryAction("Dump Memory ...", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Dump22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Dump22.png")),
                									  "Dump machine code or data in an available format", KeyEvent.VK_D,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_D, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
                									  mainUI);	
             filePrintAction = new FilePrintAction("Print ...", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print22.gif"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Print22.gif")),
                									  "Print current file", KeyEvent.VK_P,
                									  null, mainUI);	
             fileExitAction = new FileExitAction("Exit", null,
                	                         "Exit Mars", KeyEvent.VK_X,
                									  null, mainUI);	
             editUndoAction = new EditUndoAction("Undo", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Undo22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Undo22.png")),
                									  "Undo last edit", KeyEvent.VK_U,
                                             KeyStroke.getKeyStroke( KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
                									  mainUI);	
             editRedoAction = new EditRedoAction("Redo", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Redo22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Redo22.png")),
                									  "Redo last edit", KeyEvent.VK_R,
                                             KeyStroke.getKeyStroke( KeyEvent.VK_Y, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
                									  mainUI);			
             editCutAction = new EditCutAction("Cut", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Cut22.gif"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Cut22.gif")),
                									  "Cut", KeyEvent.VK_C,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_X, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
                									  mainUI);	
             editCopyAction = new EditCopyAction("Copy", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Copy22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Copy22.png")),
                									  "Copy", KeyEvent.VK_O,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
                									  mainUI);	
             editPasteAction = new EditPasteAction("Paste", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Paste22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Paste22.png")),
                									  "Paste", KeyEvent.VK_P,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_V, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
                									  mainUI);	
             editFindReplaceAction = new EditFindReplaceAction("Find/Replace", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Find22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Find22.png")),
                									  "Find/Replace", KeyEvent.VK_F,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
                									  mainUI);
             editSelectAllAction = new EditSelectAllAction("Select All", 
-                                            null, //new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Find22.png"))),
+                                            null, //IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Find22.png")),
                									  "Select All", KeyEvent.VK_A,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_A, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
                									  mainUI);
             runAssembleAction = new RunAssembleAction("Assemble",  
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Assemble22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Assemble22.png")),
                									  "Assemble the current file and clear breakpoints", KeyEvent.VK_A,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_F3, 0), 
                									  mainUI);			
             runGoAction = new RunGoAction("Go", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Play22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Play22.png")),
                									  "Run the current program", KeyEvent.VK_G,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_F5, 0),
                									  mainUI);	
             runStepAction = new RunStepAction("Step", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepForward22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"StepForward22.png")),
                									  "Run one step at a time", KeyEvent.VK_T,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_F7, 0),
                									  mainUI);	
             runBackstepAction = new RunBackstepAction("Backstep", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepBack22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"StepBack22.png")),
                									  "Undo the last step", KeyEvent.VK_B,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_F8, 0), 
                									  mainUI);	
             runPauseAction = new RunPauseAction("Pause", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Pause22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Pause22.png")),
                									  "Pause the currently running program", KeyEvent.VK_P,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_F9, 0), 
                									  mainUI);	
             runStopAction = new RunStopAction("Stop", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Stop22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Stop22.png")),
                									  "Stop the currently running program", KeyEvent.VK_S,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_F11, 0), 
                									  mainUI);
             runResetAction = new RunResetAction("Reset", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Reset22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Reset22.png")),
                									  "Reset MIPS memory and registers", KeyEvent.VK_R,
                									  KeyStroke.getKeyStroke( KeyEvent.VK_F12,0),
                									  mainUI);	
@@ -446,7 +446,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                									  null,null,
                									  mainUI);
             helpHelpAction = new HelpHelpAction("Help", 
-                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Help22.png"))),
+                                            IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Help22.png")),
                									  "Help", KeyEvent.VK_H,
                									  KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0),
                									  mainUI);	
@@ -485,25 +485,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// slight bug: user typing alt-H activates help menu item directly, not help menu
       
          fileNew = new JMenuItem(fileNewAction);
-         fileNew.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"New16.png"))));
+         fileNew.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"New16.png")));
          fileOpen = new JMenuItem(fileOpenAction);
-         fileOpen.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Open16.png"))));
+         fileOpen.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Open16.png")));
          fileClose = new JMenuItem(fileCloseAction);
-         fileClose.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+         fileClose.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"MyBlank16.gif")));
          fileCloseAll = new JMenuItem(fileCloseAllAction);
-         fileCloseAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+         fileCloseAll.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"MyBlank16.gif")));
          fileSave = new JMenuItem(fileSaveAction);
-         fileSave.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Save16.png"))));
+         fileSave.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Save16.png")));
          fileSaveAs = new JMenuItem(fileSaveAsAction);
-         fileSaveAs.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"SaveAs16.png"))));
+         fileSaveAs.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"SaveAs16.png")));
          fileSaveAll = new JMenuItem(fileSaveAllAction);
-         fileSaveAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+         fileSaveAll.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"MyBlank16.gif")));
          fileDumpMemory = new JMenuItem(fileDumpMemoryAction);
-         fileDumpMemory.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Dump16.png"))));
+         fileDumpMemory.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Dump16.png")));
          filePrint = new JMenuItem(filePrintAction);
-         filePrint.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print16.gif"))));
+         filePrint.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Print16.gif")));
          fileExit = new JMenuItem(fileExitAction);
-         fileExit.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+         fileExit.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"MyBlank16.gif")));
          file.add(fileNew);
          file.add(fileOpen);
          file.add(fileClose);
@@ -521,19 +521,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          file.add(fileExit);
       	
          editUndo = new JMenuItem(editUndoAction);
-         editUndo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Undo16.png"))));//"Undo16.gif"))));
+         editUndo.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Undo16.png")));////"Undo16.gif")));
          editRedo = new JMenuItem(editRedoAction);
-         editRedo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Redo16.png"))));//"Redo16.gif"))));      
+         editRedo.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Redo16.png")));////"Redo16.gif")));      
          editCut = new JMenuItem(editCutAction);
-         editCut.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Cut16.gif"))));
+         editCut.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Cut16.gif")));
          editCopy = new JMenuItem(editCopyAction);
-         editCopy.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Copy16.png"))));//"Copy16.gif"))));
+         editCopy.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Copy16.png")));////"Copy16.gif")));
          editPaste = new JMenuItem(editPasteAction);
-         editPaste.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Paste16.png"))));//"Paste16.gif"))));
+         editPaste.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Paste16.png")));////"Paste16.gif")));
          editFindReplace = new JMenuItem(editFindReplaceAction);
-         editFindReplace.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Find16.png"))));//"Paste16.gif"))));
+         editFindReplace.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Find16.png")));////"Paste16.gif")));
          editSelectAll = new JMenuItem(editSelectAllAction);
-         editSelectAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+         editSelectAll.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"MyBlank16.gif")));
          edit.add(editUndo);
          edit.add(editRedo);
          edit.addSeparator();
@@ -545,23 +545,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          edit.add(editSelectAll);
       
          runAssemble = new JMenuItem(runAssembleAction);
-         runAssemble.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Assemble16.png"))));//"MyAssemble16.gif"))));
+         runAssemble.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Assemble16.png")));////"MyAssemble16.gif")));
          runGo = new JMenuItem(runGoAction);
-         runGo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Play16.png"))));//"Play16.gif"))));
+         runGo.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Play16.png")));////"Play16.gif")));
          runStep = new JMenuItem(runStepAction);
-         runStep.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepForward16.png"))));//"MyStepForward16.gif"))));
+         runStep.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"StepForward16.png")));////"MyStepForward16.gif")));
          runBackstep = new JMenuItem(runBackstepAction);
-         runBackstep.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepBack16.png"))));//"MyStepBack16.gif"))));
+         runBackstep.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"StepBack16.png")));////"MyStepBack16.gif")));
          runReset = new JMenuItem(runResetAction);
-         runReset.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Reset16.png"))));//"MyReset16.gif"))));
+         runReset.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Reset16.png")));////"MyReset16.gif")));
          runStop = new JMenuItem(runStopAction);
-         runStop.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Stop16.png"))));//"Stop16.gif"))));
+         runStop.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Stop16.png")));////"Stop16.gif")));
          runPause = new JMenuItem(runPauseAction);
-         runPause.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Pause16.png"))));//"Pause16.gif"))));
+         runPause.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Pause16.png")));////"Pause16.gif")));
          runClearBreakpoints = new JMenuItem(runClearBreakpointsAction);
-         runClearBreakpoints.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+         runClearBreakpoints.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"MyBlank16.gif")));
          runToggleBreakpoints = new JMenuItem(runToggleBreakpointsAction);
-         runToggleBreakpoints.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+         runToggleBreakpoints.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"MyBlank16.gif")));
       
          run.add(runAssemble);
          run.add(runGo);
@@ -628,9 +628,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          settings.add(settingsMemoryConfiguration);
       			
          helpHelp = new JMenuItem(helpHelpAction);
-         helpHelp.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Help16.png"))));//"Help16.gif"))));
+         helpHelp.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Help16.png")));////"Help16.gif")));
          helpAbout = new JMenuItem(helpAboutAction);
-         helpAbout.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+         helpAbout.setIcon(IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"MyBlank16.gif")));
          help.add(helpHelp);
          help.addSeparator();
          help.add(helpAbout);
@@ -1171,7 +1171,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          MouseListener popupListener = new PopupListener(popup); 
          this.addMouseListener(popupListener); 
       }
-     
-   
-   
+
+
+
    }

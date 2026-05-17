@@ -69,6 +69,7 @@ import mars.venus.RunAssembleAction;
 import mars.venus.RunBackstepAction;
 import mars.venus.RunStepAction;
 import mars.venus.VenusUI;
+import mars.util.IconLoader;
 
 public class MipsXray extends AbstractMarsToolAndApplication{
 	private static final long serialVersionUID = -1L;
@@ -298,18 +299,18 @@ public class MipsXray extends AbstractMarsToolAndApplication{
            Class cs = this.getClass();
            try{
                runAssembleAction = new RunAssembleAction("Assemble",  
-                       new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Assemble22.png"))),
+                       IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"Assemble22.png")),
    							  "Assemble the current file and clear breakpoints", KeyEvent.VK_A,
    							  KeyStroke.getKeyStroke( KeyEvent.VK_F3, 0), 
    							  mainUI);			
 
                runStepAction = new RunStepAction("Step", 
-                       new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepForward22.png"))),
+                       IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"StepForward22.png")),
    							  "Run one step at a time", KeyEvent.VK_T,
    							  KeyStroke.getKeyStroke( KeyEvent.VK_F7, 0),
    							  mainUI);	
                runBackstepAction = new RunBackstepAction("Backstep", 
-                       new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepBack22.png"))),
+                       IconLoader.loadIcon(cs.getResource(Globals.imagesPath+"StepBack22.png")),
    							  "Undo the last step", KeyEvent.VK_B,
    							  KeyStroke.getKeyStroke( KeyEvent.VK_F8, 0), 
    							  mainUI);		
