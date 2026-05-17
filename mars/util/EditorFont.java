@@ -160,9 +160,46 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  @param size String containing font size.  The defaults and limits of
    	 *  sizeStringToSizeInt() are substituted if necessary.
    	 */
-       public static Font createFontFromStringValues(String family, String style, String size) {
-         return new Font(family, styleStringToStyleInt(style), sizeStringToSizeInt(size));
-      }
+    /**
+     * Returns the effective HiDPI scale factor for font sizes.
+     * Uses Xft.dpi (the X server's font DPI) relative to the standard 96 DPI baseline.
+     * This correctly accounts for HiDPI displays on Linux where Java does not
+     * automatically scale fonts the way native apps do.
+     */
+    private static float getFontScaleFactor() {
+        try {
+            // Xft.dpi is the most reliable indicator of font scale on Linux X11
+            Object xftDpi = java.awt.Toolkit.getDefaultToolkit()
+                .getDesktopProperty("gnome.Xft/DPI");
+            if (xftDpi instanceof Integer) {
+                // Xft.dpi is stored as integer * 1024 in the GNOME property
+                int dpi = (Integer) xftDpi;
+                return dpi / 1024f / 96f;
+            }
+        } catch (Throwable t) { /* ignore */ }
+        try {
+            // Fallback: read from Xresources via Toolkit
+            Object xftRes = java.awt.Toolkit.getDefaultToolkit()
+                .getDesktopProperty("awt.font.desktophints");
+            // If unavailable, fall through to FlatLaf's scale
+        } catch (Throwable t) { /* ignore */ }
+        // Final fallback: FlatLaf's user scale factor
+        return com.formdev.flatlaf.util.UIScale.getUserScaleFactor();
+    }
+
+    public static int scaleFontSize(int size) {
+        return Math.round(size * getFontScaleFactor());
+    }
+
+    public static int unscaleFontSize(int size) {
+        float scale = getFontScaleFactor();
+        if (scale == 0f) scale = 1f;
+        return Math.round(size / scale);
+    }
+
+    public static Font createFontFromStringValues(String family, String style, String size) {
+       return new Font(family, styleStringToStyleInt(style), scaleFontSize(sizeStringToSizeInt(size)));
+    }
    	
    	/**
    	 *  Handy utility to produce a string that substitutes spaces for all tab characters 

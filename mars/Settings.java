@@ -1075,7 +1075,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          if (fontSettingPosition >=0 && fontSettingPosition < fontFamilySettingsValues.length) {
             fontFamilySettingsValues[fontSettingPosition] = font.getFamily();
             fontStyleSettingsValues[fontSettingPosition] = EditorFont.styleIntToStyleString(font.getStyle());
-            fontSizeSettingsValues[fontSettingPosition] = EditorFont.sizeIntToSizeString(font.getSize());
+            fontSizeSettingsValues[fontSettingPosition] = EditorFont.sizeIntToSizeString(EditorFont.unscaleFontSize(font.getSize()));
             saveFontSetting(fontSettingPosition, fontFamilySettingsKeys, fontFamilySettingsValues);
             saveFontSetting(fontSettingPosition, fontStyleSettingsKeys, fontStyleSettingsValues);
             saveFontSetting(fontSettingPosition, fontSizeSettingsKeys, fontSizeSettingsValues);

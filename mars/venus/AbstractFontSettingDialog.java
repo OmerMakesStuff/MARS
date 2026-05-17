@@ -86,7 +86,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          //Font currentFont = Globals.getSettings().getEditorFont();
          initialFontFamily = currentFont.getFamily();
          initialFontStyle = EditorFont.styleIntToStyleString(currentFont.getStyle());
-         initialFontSize = EditorFont.sizeIntToSizeString(currentFont.getSize());
+         initialFontSize = EditorFont.sizeIntToSizeString(EditorFont.unscaleFontSize(currentFont.getSize()));
          String[] commonFontFamilies = EditorFont.getCommonFamilies();
          String[] allFontFamilies = EditorFont.getAllFamilies();
       	// The makeVectorData() method will combine these two into one Vector
@@ -107,7 +107,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          fontStyleSelector.setEditable(false);
          fontStyleSelector.setToolTipText("List of available font styles.");
       
-         fontSizeSelector = new JSlider(EditorFont.MIN_SIZE, EditorFont.MAX_SIZE, currentFont.getSize());
+         fontSizeSelector = new JSlider(EditorFont.MIN_SIZE, EditorFont.MAX_SIZE, EditorFont.unscaleFontSize(currentFont.getSize()));
          fontSizeSelector.setToolTipText("Use slider to select font size from "+EditorFont.MIN_SIZE+" to "+EditorFont.MAX_SIZE+".");
          fontSizeSelector.addChangeListener(
                 new ChangeListener() {
@@ -117,7 +117,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      fontSample.setFont(getFont());
                   }
                });  
-         SpinnerNumberModel fontSizeSpinnerModel = new SpinnerNumberModel(currentFont.getSize(), EditorFont.MIN_SIZE, EditorFont.MAX_SIZE, 1); 
+         SpinnerNumberModel fontSizeSpinnerModel = new SpinnerNumberModel(EditorFont.unscaleFontSize(currentFont.getSize()), EditorFont.MIN_SIZE, EditorFont.MAX_SIZE, 1); 
          fontSizeSpinSelector = new JSpinner(fontSizeSpinnerModel);
          fontSizeSpinSelector.setToolTipText("Current font size in points.");
          fontSizeSpinSelector.addChangeListener(
