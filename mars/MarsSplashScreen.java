@@ -1,6 +1,7 @@
    package mars;
    import java.awt.*;
    import javax.swing.*;
+   import com.formdev.flatlaf.util.UIScale;
 
 /*
 Copyright (c) 2003-2010,  Pete Sanderson and Kenneth Vollmar
@@ -58,8 +59,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			// that at the time of the call the image has not completed
 			// loading so the Image object doesn't know how big it is.
 			// So observers are involved -- see the API.
-         int width = 390;
-         int height =215;
+         int width = UIScale.scale(390);
+         int height = UIScale.scale(215);
          Toolkit tk = Toolkit.getDefaultToolkit();
          Dimension screen = tk.getScreenSize();
          int x = (screen.width-width)/2;
@@ -72,10 +73,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                ("<html><br><br>Version "+Globals.version+" Copyright (c) "+Globals.copyrightYears+"</html>", JLabel.CENTER);
          JLabel copyrt2 = new JLabel
                ("<html><br><br>"+Globals.copyrightHolders+"</html>", JLabel.CENTER);
-         title.setFont(new Font("Sans-Serif", Font.BOLD, 16));
+         title.setFont(new Font("Sans-Serif", Font.BOLD, UIScale.scale(16)));
          title.setForeground(Color.black);
-         copyrt1.setFont(new Font("Sans-Serif", Font.BOLD, 14));
-         copyrt2.setFont(new Font("Sans-Serif", Font.BOLD, 14));
+         copyrt1.setFont(new Font("Sans-Serif", Font.BOLD, UIScale.scale(14)));
+         copyrt2.setFont(new Font("Sans-Serif", Font.BOLD, UIScale.scale(14)));
          copyrt1.setForeground(Color.white);
          copyrt2.setForeground(Color.white);
 
