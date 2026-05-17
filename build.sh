@@ -7,9 +7,12 @@ BUILD_DIR="build/flatlaf-classes"
 OUT_JAR="Mars.jar"
 
 if [ ! -f "$FLATLAF_JAR" ]; then
-    echo "ERROR: $FLATLAF_JAR not found. Run:"
-    echo "  mkdir -p lib && curl -L -o $FLATLAF_JAR https://repo1.maven.org/maven2/com/formdev/flatlaf/3.7.1/flatlaf-3.7.1.jar"
-    exit 1
+    echo "==> $FLATLAF_JAR not found. Downloading..."
+    mkdir -p lib
+    if ! curl -f -L -o "$FLATLAF_JAR" "https://repo1.maven.org/maven2/com/formdev/flatlaf/3.7.1/flatlaf-3.7.1.jar"; then
+        echo "ERROR: Failed to download $FLATLAF_JAR. Please check your network connection."
+        exit 1
+    fi
 fi
 
 echo "==> Compiling MARS sources..."
