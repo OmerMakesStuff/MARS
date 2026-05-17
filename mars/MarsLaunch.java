@@ -98,6 +98,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     
    
    
+      /**
+       * FlatLaf look and feel theme class name.
+       * To switch themes, change this value to one of:
+       *   "com.formdev.flatlaf.FlatLightLaf"   – light
+       *   "com.formdev.flatlaf.FlatDarkLaf"    – dark  (current)
+       *   "com.formdev.flatlaf.FlatIntelliJLaf" – IntelliJ light
+       *   "com.formdev.flatlaf.FlatDarculaLaf"  – IntelliJ Darcula dark
+       */
+      private static final String FLATLAF_THEME = "com.formdev.flatlaf.FlatDarkLaf";
+
       private boolean simulate;
       private int displayFormat;
       private boolean verbose;  // display register name or address along with contents
@@ -237,6 +247,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
       private void launchIDE() {
          // System.setProperty("apple.laf.useScreenMenuBar", "true"); // Puts MARS menu on Mac OS menu bar
+         try {
+            UIManager.setLookAndFeel(FLATLAF_THEME);
+         } catch (Exception e) {
+            System.err.println("FlatLaf not available, falling back to default look and feel: " + e.getMessage());
+         }
          new MarsSplashScreen(splashDuration).showSplash();
          SwingUtilities.invokeLater(
                new Runnable() {
