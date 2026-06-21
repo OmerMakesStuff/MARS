@@ -49,7 +49,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
    	// ideally read or computed from config file...
        private Dimension getSize() {
-         return new Dimension(800,600);
+         return new Dimension(com.formdev.flatlaf.util.UIScale.scale(800),
+                              com.formdev.flatlaf.util.UIScale.scale(600));
       }
 
 
