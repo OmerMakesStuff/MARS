@@ -249,6 +249,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          // System.setProperty("apple.laf.useScreenMenuBar", "true"); // Puts MARS menu on Mac OS menu bar
          try {
             UIManager.setLookAndFeel(FLATLAF_THEME);
+            UIManager.put("Table.alternateRowColor", new java.awt.Color(82, 86, 88));
          } catch (Exception e) {
             System.err.println("FlatLaf not available, falling back to default look and feel: " + e.getMessage());
          }
