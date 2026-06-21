@@ -84,16 +84,22 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        private RunSpeedPanel() {
          super(new BorderLayout());
          runSpeedSlider = new JSlider(JSlider.HORIZONTAL, SPEED_INDEX_MIN,SPEED_INDEX_MAX,SPEED_INDEX_INIT);
-         runSpeedSlider.setSize(new Dimension(100,(int)runSpeedSlider.getSize().getHeight()));
-         runSpeedSlider.setMaximumSize(runSpeedSlider.getSize());
          runSpeedSlider.setMajorTickSpacing(5); 
          runSpeedSlider.setPaintTicks(true); //Create the label table 
          runSpeedSlider.addChangeListener(new RunSpeedListener());
-         sliderLabel = new JLabel(setLabel(runSpeedIndex));
+         sliderLabel = new JLabel(setLabel(SPEED_INDEX_MAX));
          sliderLabel.setHorizontalAlignment(JLabel.CENTER);
          sliderLabel.setAlignmentX(Component.CENTER_ALIGNMENT);         
          this.add(sliderLabel, BorderLayout.NORTH);
          this.add(runSpeedSlider, BorderLayout.CENTER);
+         // Measure the natural preferred width at the longest possible label text
+         int widthA = this.getPreferredSize().width;
+         sliderLabel.setText(setLabel(SPEED_INDEX_INTERACTION_LIMIT - 1));
+         int widthB = this.getPreferredSize().width;
+         int fixedWidth = Math.max(widthA, widthB);
+         sliderLabel.setText(setLabel(runSpeedIndex)); // restore actual initial text
+         this.setPreferredSize(new Dimension(fixedWidth, this.getPreferredSize().height));
+         this.setMaximumSize(new Dimension(fixedWidth, Integer.MAX_VALUE));
 			this.setToolTipText("Simulation speed for \"Go\".  At "+
 			       ((int)speedTable[SPEED_INDEX_INTERACTION_LIMIT])+" inst/sec or less, tables updated "+
 					 "after each instruction.");
