@@ -3,7 +3,7 @@
 set -e
 
 FLATLAF_JAR="lib/flatlaf-3.7.1.jar"
-BUILD_DIR="build/flatlaf-classes"
+BIN_DIR="bin"
 OUT_JAR="Mars.jar"
 
 if [ ! -f "$FLATLAF_JAR" ]; then
@@ -15,14 +15,14 @@ if [ ! -f "$FLATLAF_JAR" ]; then
     fi
 fi
 
-echo "==> Compiling MARS sources..."
-find . -name "*.java" -not -path "./$BUILD_DIR/*" | \
-    xargs javac -cp .:$FLATLAF_JAR -encoding UTF-8
+echo "==> Compiling MARS sources into $BIN_DIR..."
+rm -rf "$BIN_DIR"
+mkdir -p "$BIN_DIR"
+find . -name "*.java" -not -path "./$BIN_DIR/*" | \
+    xargs javac -cp .:$FLATLAF_JAR -encoding UTF-8 -d "$BIN_DIR"
 
-echo "==> Extracting FlatLaf classes into $BUILD_DIR..."
-rm -rf "$BUILD_DIR"
-mkdir -p "$BUILD_DIR"
-(cd "$BUILD_DIR" && jar xf "../../$FLATLAF_JAR")
+echo "==> Extracting FlatLaf classes into $BIN_DIR..."
+(cd "$BIN_DIR" && jar xf "../$FLATLAF_JAR")
 
 echo "==> Creating fat JAR: $OUT_JAR..."
 jar cmf mainclass.txt "$OUT_JAR" \
@@ -39,8 +39,7 @@ jar cmf mainclass.txt "$OUT_JAR" \
     CreateMarsJar.bat \
     build.sh \
     Mars.java \
-    Mars.class \
-    docs help images mars \
-    -C "$BUILD_DIR" .
+    docs help images \
+    -C "$BIN_DIR" .
 
 echo "==> Done! Run with: java -jar $OUT_JAR"
