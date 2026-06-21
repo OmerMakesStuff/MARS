@@ -52,8 +52,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          return new Dimension(800,600);
       }
 
-      // Light gray background color for alternating lines of the instruction lists
-      static Color altBackgroundColor = new Color(0xEE,0xEE,0xEE);  
+
 		
 		/**
 		 *  Separates Instruction name descriptor from detailed (operation) description 
@@ -293,7 +292,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          JList examples = new JList(exampleList);
          JScrollPane mipsScrollPane = new JScrollPane(examples,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); 
-         examples.setFont(new Font("Monospaced",Font.PLAIN,12));
+         Font listFont = examples.getFont();
+         examples.setFont(new Font("Monospaced", listFont.getStyle(), listFont.getSize()));
+         examples.setCellRenderer(new MyCellRenderer());
          return mipsScrollPane;
       }
    	
@@ -322,7 +323,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          JList examples = new JList(exampleList);
          JScrollPane mipsScrollPane = new JScrollPane(examples,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); 
-         examples.setFont(new Font("Monospaced",Font.PLAIN,12));
+         Font listFont = examples.getFont();
+         examples.setFont(new Font("Monospaced", listFont.getStyle(), listFont.getSize()));
          examples.setCellRenderer(new MyCellRenderer());
          return mipsScrollPane;
       }
@@ -345,7 +347,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                setForeground(list.getSelectionForeground()); 
             } 
             else {
-               setBackground((index % 2 == 0) ? altBackgroundColor : list.getBackground()); 
+               Color altColor = UIManager.getColor("Table.alternateRowColor");
+               setBackground((index % 2 == 1 && altColor != null) ? altColor : list.getBackground()); 
                setForeground(list.getForeground());
             } 
             setEnabled(list.isEnabled()); 
