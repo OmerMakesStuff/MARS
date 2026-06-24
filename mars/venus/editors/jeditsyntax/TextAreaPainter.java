@@ -48,6 +48,8 @@
          setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
       
          setFont(mars.Globals.getSettings().getEditorFont());
+         Color textFieldBg = javax.swing.UIManager.getColor("TextField.background");
+         if (textFieldBg != null) setBackground(textFieldBg);
       
          tabSizeChars = defaults.tabSize;
          blockCaret = defaults.blockCaret;

@@ -11,6 +11,7 @@
 
    import mars.Settings;
    import javax.swing.JPopupMenu;
+   import javax.swing.UIManager;
    import java.awt.Color;
 
 /**
@@ -71,11 +72,21 @@
          DEFAULTS.cols = 80;
          DEFAULTS.rows = 25;
          DEFAULTS.styles = SyntaxUtilities.getCurrentSyntaxStyles(); // was getDefaultSyntaxStyles()
-         DEFAULTS.caretColor = Color.black; // Color.red;
+         DEFAULTS.caretColor = UIManager.getColor("TextField.foreground");
          DEFAULTS.selectionColor = new Color(0xccccff);
-         DEFAULTS.lineHighlightColor = new Color(0xeeeeee);//0xe0e0e0);
+         // Use a slightly brighter version of the text-field BG for the
+         // current line highlight
+         Color textFieldBg = UIManager.getColor("TextField.background");
+         if (textFieldBg != null) {
+            int r = Math.min(255, textFieldBg.getRed()   + 18);
+            int g = Math.min(255, textFieldBg.getGreen() + 18);
+            int b = Math.min(255, textFieldBg.getBlue()  + 18);
+            DEFAULTS.lineHighlightColor = new Color(r, g, b);
+         } else {
+            DEFAULTS.lineHighlightColor = new Color(0xeeeeee);
+         }
          DEFAULTS.lineHighlight = mars.Globals.getSettings().getBooleanSetting(Settings.EDITOR_CURRENT_LINE_HIGHLIGHTING);
-         DEFAULTS.bracketHighlightColor = Color.black;
+         DEFAULTS.bracketHighlightColor = UIManager.getColor("TextField.foreground");
          DEFAULTS.bracketHighlight = false; // assembly language doesn't need this.
          DEFAULTS.eolMarkerColor = new Color(0x009999);
          DEFAULTS.eolMarkers = false; // true;

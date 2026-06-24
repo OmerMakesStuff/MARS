@@ -146,6 +146,7 @@
    	
        public void caretUpdate(CaretEvent e) {
          editPane.displayCaretPosition(((MutableCaretEvent)e).getDot());
+         editPane.updateLineNumberHighlight(this.getCaretLine());
       }
    
    	
@@ -168,7 +169,10 @@
      //
        public void setSourceCode(String s, boolean editable) {       
          this.setText(s);
-         this.setBackground( (editable)? Color.WHITE : Color.GRAY);
+         Color bg = javax.swing.UIManager.getColor(editable
+          ? "TextField.background"
+          : "TextField.disabledBackground");
+         if (bg != null) this.setBackground(bg);
          this.setEditable(editable);  
          this.setEnabled(editable);
          //this.getCaret().setVisible(editable);

@@ -102,6 +102,8 @@ public class JEditTextArea extends JComponent
                     ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, 
                     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
       lineNumberScroller.setBorder(new javax.swing.border.EmptyBorder(1,1,1,1));
+      java.awt.Color lineNumBg = UIManager.getColor("TextField.background");
+      if (lineNumBg != null) lineNumberScroller.getViewport().setBackground(lineNumBg);
       lineNumbersVertical = lineNumberScroller.getVerticalScrollBar();
    				
    // Initialize the GUI

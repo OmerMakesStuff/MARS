@@ -56,6 +56,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private JLabel caretPositionLabel;
       private JCheckBox showLineNumbers;
       private JLabel lineNumbers;
+      private int currentHighlightLine = -1;
       private static int count = 0;
       private boolean isCompoundEdit = false;
       private CompoundEdit compoundEdit;
@@ -75,6 +76,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          Globals.getSettings().addObserver(this);
          this.fileStatus = new FileStatus();      
          lineNumbers = new JLabel();
+         lineNumbers.setOpaque(true);
+         java.awt.Color lineNumBg = javax.swing.UIManager.getColor("TextField.background");
+         if (lineNumBg != null) lineNumbers.setBackground(lineNumBg);
       
          if (Globals.getSettings().getBooleanSetting(Settings.GENERIC_TEXT_EDITOR)) {
             this.sourceCode = new GenericTextArea(this, lineNumbers);
@@ -97,7 +101,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                         setFileStatus(FileStatus.NOT_EDITED); 
                         FileStatus.set(FileStatus.NOT_EDITED);
                         if (showingLineNumbers()) {
-                           lineNumbers.setText(getLineNumbersList(sourceCode.getDocument()));
+                           lineNumbers.setText(getLineNumbersList(sourceCode.getDocument(), currentHighlightLine));
                         }
                         return;
                      } 
@@ -129,7 +133,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      Globals.getGui().getMainPane().getExecutePane().clearPane(); // DPS 9-Aug-2011
                   	
                      if (showingLineNumbers()) {
-                        lineNumbers.setText(getLineNumbersList(sourceCode.getDocument()));
+                        lineNumbers.setText(getLineNumbersList(sourceCode.getDocument(), currentHighlightLine));
                      }
                   }
                   public void removeUpdate(DocumentEvent evt) {
@@ -158,7 +162,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                new ItemListener() {
                   public void itemStateChanged(ItemEvent e) {
                      if (showLineNumbers.isSelected()) {
-                        lineNumbers.setText(getLineNumbersList(sourceCode.getDocument()));
+                        lineNumbers.setText(getLineNumbersList(sourceCode.getDocument(), currentHighlightLine));
                         lineNumbers.setVisible(true);
                      } 
                      else {
@@ -211,22 +215,40 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 * one line number per line.
    	 */
       private static final String spaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+       public void updateLineNumberHighlight(int caretLine) {
+         if (!showingLineNumbers()) return;
+         currentHighlightLine = caretLine;
+         lineNumbers.setText(getLineNumbersList(sourceCode.getDocument(), currentHighlightLine));
+      }
+
       public String getLineNumbersList(javax.swing.text.Document doc) {
-         StringBuffer lineNumberList = new StringBuffer("<html>");
-         int lineCount = doc.getDefaultRootElement().getElementCount(); //this.getSourceLineCount();
+         return getLineNumbersList(doc, -1);
+      }
+
+      public String getLineNumbersList(javax.swing.text.Document doc, int currentLine) {
+         // Compute the highlight color (same as table alternate row color set globally)
+         java.awt.Color hlColor = javax.swing.UIManager.getColor("Table.alternateRowColor");
+         String hlHex = (hlColor != null)
+               ? String.format("%02x%02x%02x", hlColor.getRed(), hlColor.getGreen(), hlColor.getBlue())
+               : null;
+
+         StringBuilder sb = new StringBuilder("<html><table cellpadding=0 cellspacing=0 border=0>");
+         int lineCount = doc.getDefaultRootElement().getElementCount();
          int digits = Integer.toString(lineCount).length();
-         for (int i=1; i<=lineCount;i++) {
+         for (int i = 1; i <= lineCount; i++) {
             String lineStr = Integer.toString(i);
-            int leadingSpaces = digits-lineStr.length();
-            if (leadingSpaces == 0) {
-               lineNumberList.append(lineStr+"&nbsp;<br>");
-            } 
-            else {
-               lineNumberList.append(spaces.substring(0,leadingSpaces*6)+lineStr+"&nbsp;<br>");
+            int leadingSpaces = digits - lineStr.length();
+            String num = (leadingSpaces == 0)
+                  ? lineStr + "&nbsp;"
+                  : spaces.substring(0, leadingSpaces * 6) + lineStr + "&nbsp;";
+            if (hlHex != null && i == currentLine + 1) {
+               sb.append("<tr bgcolor=#").append(hlHex).append("><td>").append(num).append("</td></tr>");
+            } else {
+               sb.append("<tr><td>").append(num).append("</td></tr>");
             }
          }
-         lineNumberList.append("<br></html>");
-         return lineNumberList.toString();
+         sb.append("</table><br></html>");
+         return sb.toString();
       }
    
    
