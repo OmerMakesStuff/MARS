@@ -73,7 +73,8 @@
          DEFAULTS.rows = 25;
          DEFAULTS.styles = SyntaxUtilities.getCurrentSyntaxStyles(); // was getDefaultSyntaxStyles()
          DEFAULTS.caretColor = UIManager.getColor("TextField.foreground");
-         DEFAULTS.selectionColor = new Color(0xccccff);
+         Color selColor = UIManager.getColor("TextField.selectionBackground");
+         DEFAULTS.selectionColor = (selColor != null) ? selColor : new Color(0xccccff);
          // Use a slightly brighter version of the text-field BG for the
          // current line highlight
          Color textFieldBg = UIManager.getColor("TextField.background");
