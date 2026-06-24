@@ -71,7 +71,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// pane, will make messages more readable.  For run
       	// pane, will allow properly aligned "text graphics"
       	// DPS 15 Dec 2008
-         Font monoFont = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+         Font monoFont = Globals.getSettings().getEditorFont();
          assemble.setFont(monoFont);
          run.setFont(monoFont);      	
       	
