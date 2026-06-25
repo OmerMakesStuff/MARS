@@ -1009,26 +1009,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        
          public Component getTableCellRendererComponent(JTable table, Object value, 
                             boolean isSelected, boolean hasFocus, int row, int column) {									 
+            this.setBackground(null);
+            this.setForeground(null);
             JLabel cell = (JLabel) super.getTableCellRendererComponent(table, value, 
                                     isSelected, hasFocus, row, column);
          	
             cell.setHorizontalAlignment(SwingConstants.RIGHT);
+            cell.setFont(Globals.getSettings().getEditorFont());
             int rowFirstAddress = Binary.stringToInt(table.getValueAt(row,ADDRESS_COLUMN).toString());
-            if (settings.getDataSegmentHighlighting() && addressHighlighting  && rowFirstAddress==addressRowFirstAddress && column==addressColumn) {
+            if (settings.getDataSegmentHighlighting() && addressHighlighting  && rowFirstAddress==addressRowFirstAddress && column==addressColumn && !isSelected) {
                cell.setBackground( settings.getColorSettingByPosition(Settings.DATASEGMENT_HIGHLIGHT_BACKGROUND) );
                cell.setForeground( settings.getColorSettingByPosition(Settings.DATASEGMENT_HIGHLIGHT_FOREGROUND) );
-               cell.setFont( settings.getFontByPosition(Settings.DATASEGMENT_HIGHLIGHT_FONT) );
-            } 
-            else if (row%2==0) {
-               cell.setBackground( settings.getColorSettingByPosition(Settings.EVEN_ROW_BACKGROUND) );
-               cell.setForeground( settings.getColorSettingByPosition(Settings.EVEN_ROW_FOREGROUND) );
-               cell.setFont( settings.getFontByPosition(Settings.EVEN_ROW_FONT) );
-            } 
-            else {
-               cell.setBackground( settings.getColorSettingByPosition(Settings.ODD_ROW_BACKGROUND) );
-               cell.setForeground( settings.getColorSettingByPosition(Settings.ODD_ROW_FOREGROUND) );				
-               cell.setFont( settings.getFontByPosition(Settings.ODD_ROW_FONT) );
-            }
+               }
             return cell;
          }  
       

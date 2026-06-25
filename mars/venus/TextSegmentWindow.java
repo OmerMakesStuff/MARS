@@ -819,9 +819,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        
           public Component getTableCellRendererComponent(JTable table, Object value, 
                             boolean isSelected, boolean hasFocus, int row, int column) {									 
+            this.setBackground(null);
+            this.setForeground(null);
             Component cell = super.getTableCellRendererComponent(table, value, 
                                     isSelected, hasFocus, row, column);
-            //cell.setFont(tableCellFont);
+            cell.setFont(Globals.getSettings().getEditorFont());
             TextSegmentWindow textSegment = Globals.getGui().getMainPane().getExecutePane().getTextSegmentWindow();
             Settings settings = Globals.getSettings();
             boolean highlighting = textSegment.getCodeHighlighting();
@@ -830,23 +832,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                if (mars.simulator.Simulator.inDelaySlot() || textSegment.inDelaySlot) {
                   cell.setBackground( settings.getColorSettingByPosition(Settings.TEXTSEGMENT_DELAYSLOT_HIGHLIGHT_BACKGROUND) );
                   cell.setForeground( settings.getColorSettingByPosition(Settings.TEXTSEGMENT_DELAYSLOT_HIGHLIGHT_FOREGROUND) );
-                  cell.setFont( settings.getFontByPosition(Settings.TEXTSEGMENT_DELAYSLOT_HIGHLIGHT_FONT) );
-               } 
+                  } 
                else {
                   cell.setBackground( settings.getColorSettingByPosition(Settings.TEXTSEGMENT_HIGHLIGHT_BACKGROUND) );
                   cell.setForeground( settings.getColorSettingByPosition(Settings.TEXTSEGMENT_HIGHLIGHT_FOREGROUND) );
-                  cell.setFont( settings.getFontByPosition(Settings.TEXTSEGMENT_HIGHLIGHT_FONT) );
-               }
-            } 
-            else if (row%2==0) {
-               cell.setBackground( settings.getColorSettingByPosition(Settings.EVEN_ROW_BACKGROUND) );
-               cell.setForeground( settings.getColorSettingByPosition(Settings.EVEN_ROW_FOREGROUND) );
-               cell.setFont( settings.getFontByPosition(Settings.EVEN_ROW_FONT) );
-            } 
-            else {
-               cell.setBackground( settings.getColorSettingByPosition(Settings.ODD_ROW_BACKGROUND) );
-               cell.setForeground( settings.getColorSettingByPosition(Settings.ODD_ROW_FOREGROUND) );				
-               cell.setFont( settings.getFontByPosition(Settings.ODD_ROW_FONT) );
+                  }
             }				
             return cell;
          }  
@@ -860,9 +850,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        class MachineCodeCellRenderer extends DefaultTableCellRenderer { 
           public Component getTableCellRendererComponent(JTable table, Object value, 
                             boolean isSelected, boolean hasFocus, int row, int column) {									 
+            this.setBackground(null);
+            this.setForeground(null);
             JLabel cell = (JLabel) super.getTableCellRendererComponent(table, value, 
                                     isSelected, hasFocus, row, column);
-            cell.setFont(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT);
+            cell.setFont(Globals.getSettings().getEditorFont());
             cell.setHorizontalAlignment(SwingConstants.RIGHT);
             if (row%2==0) {
                cell.setBackground( Globals.getSettings().getColorSettingByPosition(Settings.EVEN_ROW_BACKGROUND) );

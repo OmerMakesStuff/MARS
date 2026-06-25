@@ -39,12 +39,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * of the integer value.
  */
     class MonoRightCellRenderer extends DefaultTableCellRenderer { 
-      public static final Font MONOSPACED_PLAIN_12POINT = new Font("Monospaced",Font.PLAIN,12); 
        public Component getTableCellRendererComponent(JTable table, Object value, 
                             boolean isSelected, boolean hasFocus, int row, int column) {									 
          JLabel cell = (JLabel) super.getTableCellRendererComponent(table, value, 
                                     isSelected, hasFocus, row, column);
-         cell.setFont(MONOSPACED_PLAIN_12POINT);
+         cell.setFont(Globals.getSettings().getEditorFont());
          cell.setHorizontalAlignment(SwingConstants.RIGHT);
          return cell;
       }  

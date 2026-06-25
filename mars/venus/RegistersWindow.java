@@ -67,9 +67,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          table.getColumnModel().getColumn(NUMBER_COLUMN).setPreferredWidth(25);
          table.getColumnModel().getColumn(VALUE_COLUMN).setPreferredWidth(60);
       	// Display register values (String-ified) right-justified in mono font
-         table.getColumnModel().getColumn(NAME_COLUMN).setCellRenderer(new RegisterCellRenderer(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT, SwingConstants.LEFT));
-         table.getColumnModel().getColumn(NUMBER_COLUMN).setCellRenderer(new RegisterCellRenderer(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT, SwingConstants.RIGHT));
-         table.getColumnModel().getColumn(VALUE_COLUMN).setCellRenderer(new RegisterCellRenderer(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT, SwingConstants.RIGHT));
+         table.getColumnModel().getColumn(NAME_COLUMN).setCellRenderer(new RegisterCellRenderer(SwingConstants.LEFT));
+         table.getColumnModel().getColumn(NUMBER_COLUMN).setCellRenderer(new RegisterCellRenderer(SwingConstants.RIGHT));
+         table.getColumnModel().getColumn(VALUE_COLUMN).setCellRenderer(new RegisterCellRenderer(SwingConstants.RIGHT));
          table.setPreferredScrollableViewportSize(new Dimension(200,700));
          this.setLayout(new BorderLayout()); // table display will occupy entire width if widened
          this.add(new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER));
@@ -226,36 +226,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * all columns.
    */
        private class RegisterCellRenderer extends DefaultTableCellRenderer { 
-         private Font font;
          private int alignment;
       	 
-          public RegisterCellRenderer(Font font, int alignment) {
+          public RegisterCellRenderer(int alignment) {
             super();
-            this.font = font;
             this.alignment = alignment;
          }
       	
           public Component getTableCellRendererComponent(JTable table, Object value, 
                             boolean isSelected, boolean hasFocus, int row, int column) {									 
+            this.setBackground(null);
+            this.setForeground(null);
             JLabel cell = (JLabel) super.getTableCellRendererComponent(table, value, 
                                     isSelected, hasFocus, row, column);
-            cell.setFont(font);
+            cell.setFont(Globals.getSettings().getEditorFont());
             cell.setHorizontalAlignment(alignment);
-            if (settings.getRegistersHighlighting() && highlighting && row==highlightRow) {
+            if (settings.getRegistersHighlighting() && highlighting && row==highlightRow && !isSelected) {
                cell.setBackground( settings.getColorSettingByPosition(Settings.REGISTER_HIGHLIGHT_BACKGROUND) );
                cell.setForeground( settings.getColorSettingByPosition(Settings.REGISTER_HIGHLIGHT_FOREGROUND) );
-					cell.setFont( settings.getFontByPosition(Settings.REGISTER_HIGHLIGHT_FONT) );
-            } 
-            else if (row%2==0) {
-               cell.setBackground( settings.getColorSettingByPosition(Settings.EVEN_ROW_BACKGROUND) );
-               cell.setForeground( settings.getColorSettingByPosition(Settings.EVEN_ROW_FOREGROUND) );
-					cell.setFont( settings.getFontByPosition(Settings.EVEN_ROW_FONT) );
-            } 
-            else {
-               cell.setBackground( settings.getColorSettingByPosition(Settings.ODD_ROW_BACKGROUND) );
-               cell.setForeground( settings.getColorSettingByPosition(Settings.ODD_ROW_FOREGROUND) );				
-					cell.setFont( settings.getFontByPosition(Settings.ODD_ROW_FONT) );
-            }
+					}
             return cell;
          }  
       }
