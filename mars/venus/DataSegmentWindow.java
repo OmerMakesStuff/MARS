@@ -840,9 +840,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             }
          } 
          else if (observable == settings) { 
-            // Suspended work in progress. Intended to disable combobox item for text segment. DPS 9-July-2013.
-            //baseAddressSelector.getModel().getElementAt(TEXT_BASE_ADDRESS_INDEX)
-            //*.setEnabled(settings.getBooleanSetting(Settings.SELF_MODIFYING_CODE_ENABLED));
+            dataTable.setRowHeight(dataTable.getFontMetrics(Globals.getSettings().getEditorFont()).getHeight() + 4);
+            dataTable.repaint();
          }
          else if (obj instanceof MemoryAccessNotice) {          	// NOTE: observable != Memory.getInstance() because Memory class delegates notification duty.
             MemoryAccessNotice access = (MemoryAccessNotice) obj;

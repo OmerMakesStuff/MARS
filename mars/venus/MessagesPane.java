@@ -1,15 +1,16 @@
-   package mars.venus;
-   import mars.*;
-   import javax.swing.*;
-   import javax.swing.text.*;
-   import java.awt.*;
-   import java.awt.event.*;
-   import java.util.concurrent.ArrayBlockingQueue;
-   import javax.swing.event.DocumentListener;
-   import javax.swing.undo.UndoableEdit;
-   import mars.simulator.Simulator;
-   import javax.swing.event.DocumentEvent;
-   import javax.swing.text.Position.Bias;
+package mars.venus;
+import mars.*;
+import javax.swing.*;
+import javax.swing.text.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Observer;
+import java.util.concurrent.ArrayBlockingQueue;
+import javax.swing.event.DocumentListener;
+import javax.swing.undo.UndoableEdit;
+import mars.simulator.Simulator;
+import javax.swing.event.DocumentEvent;
+import javax.swing.text.Position.Bias;
 
 /*
 Copyright (c) 2003-2010,  Pete Sanderson and Kenneth Vollmar
@@ -44,7 +45,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   *   @author Team JSpim
   **/
 
-    public class MessagesPane extends JTabbedPane{
+    public class MessagesPane extends JTabbedPane implements Observer {
       JTextArea assemble, run;
       JPanel assembleTab, runTab;
    	// These constants are designed to keep scrolled contents of the 
@@ -62,6 +63,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
        public MessagesPane() {
          super();
+         Globals.getSettings().addObserver(this);
          this.setMinimumSize(new Dimension(0,0));
          assemble= new JTextArea();
          run= new JTextArea();
@@ -497,5 +499,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             }
          }
       }  // Asker class
-      ////////////////////////////////////////////////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
+
+      /**
+       * Method to be called when the editor font changes.
+       */
+      public void update(java.util.Observable observable, Object obj) {
+         if (observable == Globals.getSettings()) {
+            Font monoFont = Globals.getSettings().getEditorFont();
+            assemble.setFont(monoFont);
+            run.setFont(monoFont);
+         }
+      }
    }

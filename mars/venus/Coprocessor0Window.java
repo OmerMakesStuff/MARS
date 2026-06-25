@@ -62,6 +62,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
        public Coprocessor0Window() {
          Simulator.getInstance().addObserver(this);
+         Globals.getSettings().addObserver(this);
 			settings = Globals.getSettings();
          this.highlighting = false;
          table = new MyTippedJTable(new RegTableModel(setupWindow()));
@@ -194,6 +195,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                this.highlightCellForRegister((Register)observable);
                Globals.getGui().getRegistersPane().setSelectedComponent(this);
             }
+         }
+         else if (observable == Globals.getSettings()) {
+            table.setRowHeight(table.getFontMetrics(Globals.getSettings().getEditorFont()).getHeight() + 4);
+            table.repaint();
          }
       }
    	

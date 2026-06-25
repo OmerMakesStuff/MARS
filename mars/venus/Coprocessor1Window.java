@@ -62,6 +62,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
        public Coprocessor1Window() {
          Simulator.getInstance().addObserver(this);
+         Globals.getSettings().addObserver(this);
 		   settings = Globals.getSettings();
          // Display registers in table contained in scroll pane.
          this.setLayout(new BorderLayout()); // table display will occupy entire width if widened
@@ -272,6 +273,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                this.highlightCellForRegister((Register)observable);
                Globals.getGui().getRegistersPane().setSelectedComponent(this);            
             }
+         }
+         else if (observable == Globals.getSettings()) {
+            table.setRowHeight(table.getFontMetrics(Globals.getSettings().getEditorFont()).getHeight() + 4);
+            table.repaint();
          }
       }
    	

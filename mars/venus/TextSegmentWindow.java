@@ -320,6 +320,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             if (Globals.getSettings().getBooleanSetting(Settings.SELF_MODIFYING_CODE_ENABLED)) {
                addAsTextSegmentObserver();
             }
+            table.setRowHeight(table.getFontMetrics(Globals.getSettings().getEditorFont()).getHeight() + 4);
+            table.repaint();
          }
          else if (obj instanceof MemoryAccessNotice) { 
          	// NOTE: observable != Memory.getInstance() because Memory class delegates notification duty.
