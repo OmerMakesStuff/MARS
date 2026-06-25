@@ -66,6 +66,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          // Display registers in table contained in scroll pane.
          this.setLayout(new BorderLayout()); // table display will occupy entire width if widened
          table = new MyTippedJTable(new RegTableModel(setupWindow()));
+         table.setRowHeight(table.getFontMetrics(Globals.getSettings().getEditorFont()).getHeight() + 4);
          table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(20);
          table.getColumnModel().getColumn(FLOAT_COLUMN).setPreferredWidth(70);
          table.getColumnModel().getColumn(DOUBLE_COLUMN).setPreferredWidth(130);

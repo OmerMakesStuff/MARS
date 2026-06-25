@@ -154,6 +154,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             tableModel.fireTableDataChanged();// initialize listener
          }
          table= new MyTippedJTable(tableModel);
+         table.setRowHeight(table.getFontMetrics(Globals.getSettings().getEditorFont()).getHeight() + 4);
       
       	// prevents cells in row from being highlighted when user clicks on breakpoint checkbox
          table.setRowSelectionAllowed(false);

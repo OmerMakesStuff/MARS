@@ -63,6 +63,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			settings = Globals.getSettings();
          this.highlighting = false;
          table = new MyTippedJTable(new RegTableModel(setupWindow()));
+         table.setRowHeight(table.getFontMetrics(Globals.getSettings().getEditorFont()).getHeight() + 4);
          table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(25);
          table.getColumnModel().getColumn(NUMBER_COLUMN).setPreferredWidth(25);
          table.getColumnModel().getColumn(VALUE_COLUMN).setPreferredWidth(60);

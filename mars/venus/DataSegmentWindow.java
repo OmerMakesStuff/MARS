@@ -428,6 +428,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             names[i] = getHeaderStringForColumn(i, addressBase);
          }
          dataTable= new MyTippedJTable(new DataTableModel(dataData, names));
+         dataTable.setRowHeight(dataTable.getFontMetrics(Globals.getSettings().getEditorFont()).getHeight() + 4);
       	// Do not allow user to re-order columns; column order corresponds to MIPS memory order
          dataTable.getTableHeader().setReorderingAllowed(false);
          dataTable.setRowSelectionAllowed(false);

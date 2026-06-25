@@ -350,6 +350,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                labelTable.setModel(m);
             }
             labelTable.getColumnModel().getColumn(ADDRESS_COLUMN).setCellRenderer(new MonoRightCellRenderer());
+            labelTable.setRowHeight(labelTable.getFontMetrics(Globals.getSettings().getEditorFont()).getHeight() + 4);
             return labelTable;
          }
       
