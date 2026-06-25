@@ -66,15 +66,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private static final int maxLengthDecimal = 20;  
       private static final String denormalizedLabel = "                 significand (denormalized - no 'hidden bit')";
       private static final String normalizedLabel =   "                 significand ('hidden bit' underlined)       ";
-      private static final Font instructionsFont = new Font("Arial",Font.PLAIN,14);
-      private static final Font hexDisplayFont = new Font("Courier",Font.PLAIN,32);
-      private static final Font binaryDisplayFont = new Font("Courier",Font.PLAIN,18);
-      private static final Font decimalDisplayFont = new Font("Courier",Font.PLAIN,18);
-      private static final Color hexDisplayColor = Color.red;
-      private static final Color binaryDisplayColor = Color.black;
-      private static final Color decimalDisplayColor = Color.blue;
-      private static final String expansionFontTag = "<font size=\"+1\" face=\"Courier\" color=\"#000000\">";
-      private static final String instructionFontTag = "<font size=\"+0\" face=\"Verdana, Arial, Helvetica\" color=\"#000000\">";
+      private static final Font instructionsFont = new Font("Arial",Font.PLAIN,com.formdev.flatlaf.util.UIScale.scale(14));
+      private static final Font hexDisplayFont = new Font("Courier",Font.PLAIN,com.formdev.flatlaf.util.UIScale.scale(32));
+      private static final Font binaryDisplayFont = new Font("Courier",Font.PLAIN,com.formdev.flatlaf.util.UIScale.scale(18));
+      private static final Font decimalDisplayFont = new Font("Courier",Font.PLAIN,com.formdev.flatlaf.util.UIScale.scale(18));
+      private static final Color hexDisplayColor = new Color(0xFF5555);
+      private static final Color binaryDisplayColor = Color.white;
+      private static final Color decimalDisplayColor = new Color(0x00BFFF);
+      private static final String expansionFontTag = "<font size=\"+1\" face=\"Courier\" color=\"#FFFFFF\">";
+      private static final String instructionFontTag = "<font size=\"+0\" face=\"Verdana, Arial, Helvetica\" color=\"#FFFFFF\">";
       private static final int exponentBias = 127;  // 32 bit floating point exponent bias
    	
       private Register attachedRegister = null;
@@ -274,7 +274,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// Non-Editable display for expansion of binary representation
       	
          expansionDisplay = new JLabel(new FlavorsOfFloat().expansionString);
-         expansionDisplay.setFont(new Font("Monospaced",Font.PLAIN,12));		
+         expansionDisplay.setFont(new Font("Monospaced",Font.PLAIN,com.formdev.flatlaf.util.UIScale.scale(12)));		
          expansionDisplay.setFocusable(false); // causes it to be skipped in "tab sequence".
          expansionDisplay.setBackground(leftPanel.getBackground());
          JPanel expansionDisplayBox = new JPanel(new GridLayout(2,1));
@@ -307,7 +307,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          JEditorPane hexExplain = new JEditorPane("text/html",expansionFontTag+"&lt;&nbsp;&nbsp;Hexadecimal representation"+"</font>");
          hexExplain.setEditable(false);
          hexExplain.setFocusable(false);
-         hexExplain.setForeground(Color.black);
+         hexExplain.setForeground(Color.white);
          hexExplain.setBackground(place1.getBackground());
          JEditorPane hexToBinExplain = new JEditorPane("text/html",expansionFontTag+"&lt;&nbsp;&nbsp;Each hex digit represents 4 bits"+"</font>");
          hexToBinExplain.setEditable(false);
@@ -750,7 +750,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         // underlying JPanel (see first statement).
           public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.setColor(Color.red);  
+            g.setColor(hexDisplayColor);  
             //FontMetrics fontMetrics = hexDisplay.getGraphics().getFontMetrics();
             int upperY = 0;
             int lowerY = 60;
@@ -905,7 +905,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          	
          	/*
             int columnWidth = getWidth()/getColumns();
-            Color shadedColor = Color.red;
+            Color shadedColor = hexDisplayColor;
             Polygon p;
             // loop will handle the lower order 5 "nibbles" (hex digits)
             for (int i=3; i<20; i+=8) {
