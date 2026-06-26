@@ -192,12 +192,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// Set up MIPS help tab.  Most contents are generated from instruction set info.
        private JPanel createMipsHelpInfoPanel() {
          JPanel mipsHelpInfo = new JPanel(new BorderLayout());
-         String helpRemarksColor = "CCFF99";
        // Introductory remarks go at the top as a label
          String helpRemarks = 
-            "<html><center><table bgcolor=\"#"+helpRemarksColor+"\" border=0 cellpadding=0>"+// width="+this.getSize().getWidth()+">"+
+            "<html><center><table border=0 cellpadding=0>"+// width="+this.getSize().getWidth()+">"+
             "<tr>"+
-              "<th colspan=2><b><i><font size=+1>&nbsp;&nbsp;Operand Key for Example Instructions&nbsp;&nbsp;</font></i></b></th>"+
+              "<th colspan=2><span style=\"font-weight:bold;font-size:150%;\">&nbsp;&nbsp;Operand Key for Example Instructions&nbsp;&nbsp;</span></th>"+
             "</tr>"+
             "<tr>"+
                "<td><tt>label, target</tt></td><td>any textual label</td>"+
@@ -221,12 +220,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                "<td><tt>100000</tt></td><td>signed 32-bit integer (-2147483648 to 2147483647)</td>" +
             "</tr><tr>" +
             "</tr><tr>" +
-               "<td colspan=2><b><i><font size=+1>Load & Store addressing mode, basic instructions</font></i></b></td>" +
+               "<td colspan=2><span style=\"font-weight:bold;font-size:125%\">Load & Store addressing mode, basic instructions</span></td>" +
             "</tr><tr>" +
                "<td><tt>-100($t2)</tt></td><td>sign-extended 16-bit integer added to contents of $t2</td>" + 
             "</tr><tr>" +
             "</tr><tr>" +
-               "<td colspan=2><b><i><font size=+1>Load & Store addressing modes, pseudo instructions</font></i></b></td>" + 
+               "<td colspan=2><span style=\"font-weight:bold;font-size:125%\">Load & Store addressing modes, pseudo instructions</span></td>" + 
             "</tr><tr>" +
                "<td><tt>($t2)</tt></td><td>contents of $t2</td>" + 
             "</tr><tr>" +
@@ -252,9 +251,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// Original code:         mipsHelpInfo.add(new JLabel(helpRemarks, JLabel.CENTER), BorderLayout.NORTH);
          JLabel helpRemarksLabel = new JLabel(helpRemarks, JLabel.CENTER);
          helpRemarksLabel.setOpaque(true);
-         helpRemarksLabel.setBackground(Color.decode("0x"+helpRemarksColor));
          JScrollPane operandsScrollPane = new JScrollPane(helpRemarksLabel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
          mipsHelpInfo.add(operandsScrollPane, BorderLayout.NORTH);
          // Below the label is a tabbed pane with categories of MIPS help
          JTabbedPane tabbedPane = new JTabbedPane();
