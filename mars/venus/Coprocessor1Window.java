@@ -84,24 +84,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          int numFlags = Coprocessor1.getConditionFlagCount();
          conditionFlagCheckBox = new JCheckBox[numFlags];
          JPanel checksPane = new JPanel(new GridLayout(2,numFlags/2));
-      	// Tried to get interior of checkboxes to be white while its label and 
-      	// remaining background stays same background color.  Found example 
-      	// like the following on the web, but does not appear to have any 
-      	// affect.  Might be worth further study but for now I'll just set
-      	// background to white.  I want white so the checkbox appears
-      	// "responsive" to user clicking on it (it is responsive anyway but looks
-      	// dead when drawn in gray.
-      	//Object saveBG = UIManager.getColor("CheckBox.interiorBackground");
-      	//UIManager.put("CheckBox.interiorBackground", Color.WHITE);
          for (int i=0; i < numFlags; i++) {
             conditionFlagCheckBox[i] = new JCheckBox(Integer.toString(i));
             conditionFlagCheckBox[i].addActionListener(this);
-            conditionFlagCheckBox[i].setBackground(Color.WHITE);
             conditionFlagCheckBox[i].setToolTipText("checked == 1, unchecked == 0");
             checksPane.add(conditionFlagCheckBox[i]);
          }		
-      	//UIManager.put("CheckBox.interiorBackground", saveBG);	
          flagsPane.add(checksPane,BorderLayout.CENTER);
+         flagsPane.setBorder(new javax.swing.border.EmptyBorder(0, 0, com.formdev.flatlaf.util.UIScale.scale(6), 0));
          this.add(flagsPane, BorderLayout.SOUTH);
       }
     
