@@ -158,27 +158,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       
       	// prevents cells in row from being highlighted when user clicks on breakpoint checkbox
          table.setRowSelectionAllowed(false);
-      	
-         table.getColumnModel().getColumn(BREAK_COLUMN).setMinWidth(40); 
-         table.getColumnModel().getColumn(ADDRESS_COLUMN).setMinWidth(80); 
-         table.getColumnModel().getColumn(CODE_COLUMN).setMinWidth(80);
-      	
-         table.getColumnModel().getColumn(BREAK_COLUMN).setMaxWidth(50); 
-         table.getColumnModel().getColumn(ADDRESS_COLUMN).setMaxWidth(90); 
-         table.getColumnModel().getColumn(CODE_COLUMN).setMaxWidth(90);
-         table.getColumnModel().getColumn(BASIC_COLUMN).setMaxWidth(200);		
-      
-         table.getColumnModel().getColumn(BREAK_COLUMN).setPreferredWidth(40); 
-         table.getColumnModel().getColumn(ADDRESS_COLUMN).setPreferredWidth(80); 
-         table.getColumnModel().getColumn(CODE_COLUMN).setPreferredWidth(80);
-         table.getColumnModel().getColumn(BASIC_COLUMN).setPreferredWidth(160);
-         table.getColumnModel().getColumn(SOURCE_COLUMN).setPreferredWidth(280);
+         updateColumnWidths();
       	
          CodeCellRenderer codeStepHighlighter = new CodeCellRenderer(); 
          table.getColumnModel().getColumn(BASIC_COLUMN).setCellRenderer(codeStepHighlighter);
          table.getColumnModel().getColumn(SOURCE_COLUMN).setCellRenderer(codeStepHighlighter);
-      	// to render String right-justified in mono font
-         table.getColumnModel().getColumn(ADDRESS_COLUMN).setCellRenderer(new MonoRightCellRenderer());
+         table.getColumnModel().getColumn(ADDRESS_COLUMN).setCellRenderer(new MachineCodeCellRenderer());
          table.getColumnModel().getColumn(CODE_COLUMN).setCellRenderer(new MachineCodeCellRenderer());
          table.getColumnModel().getColumn(BREAK_COLUMN).setCellRenderer(new CheckBoxTableCellRenderer());
          reorderColumns(); // Re-order columns according to current preference...
@@ -198,6 +183,28 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
       }
    	
+       private void updateColumnWidths() {
+          int charWidth = table.getFontMetrics(Globals.getSettings().getEditorFont()).charWidth('W');
+          int breakMin = com.formdev.flatlaf.util.UIScale.scale(40);
+          int breakPref = com.formdev.flatlaf.util.UIScale.scale(40);
+          int breakMax = com.formdev.flatlaf.util.UIScale.scale(50);
+          
+          table.getColumnModel().getColumn(BREAK_COLUMN).setMinWidth(breakMin); 
+          table.getColumnModel().getColumn(ADDRESS_COLUMN).setMinWidth(charWidth * 10); 
+          table.getColumnModel().getColumn(CODE_COLUMN).setMinWidth(charWidth * 10);
+        	
+          table.getColumnModel().getColumn(BREAK_COLUMN).setMaxWidth(breakMax); 
+          table.getColumnModel().getColumn(ADDRESS_COLUMN).setMaxWidth(charWidth * 13); 
+          table.getColumnModel().getColumn(CODE_COLUMN).setMaxWidth(charWidth * 13);
+          table.getColumnModel().getColumn(BASIC_COLUMN).setMaxWidth(charWidth * 30);		
+        
+          table.getColumnModel().getColumn(BREAK_COLUMN).setPreferredWidth(breakPref); 
+          table.getColumnModel().getColumn(ADDRESS_COLUMN).setPreferredWidth(charWidth * 11); 
+          table.getColumnModel().getColumn(CODE_COLUMN).setPreferredWidth(charWidth * 11);
+          table.getColumnModel().getColumn(BASIC_COLUMN).setPreferredWidth(charWidth * 20);
+          table.getColumnModel().getColumn(SOURCE_COLUMN).setPreferredWidth(charWidth * 40);
+       }
+
    	////////////  Support for program arguments added DPS 17-July-2008 //////////////
    	/**
    	 *  Get program arguments from text field in south border of text segment window.
@@ -321,6 +328,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                addAsTextSegmentObserver();
             }
             table.setRowHeight(table.getFontMetrics(Globals.getSettings().getEditorFont()).getHeight() + 4);
+            updateColumnWidths();
             table.repaint();
          }
          else if (obj instanceof MemoryAccessNotice) { 
@@ -568,8 +576,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public void unhighlightAllSteps() {
          boolean saved = this.getCodeHighlighting();
          this.setCodeHighlighting(false);
-         table.tableChanged(new TableModelEvent(tableModel,0,data.length-1, BASIC_COLUMN));
-         table.tableChanged(new TableModelEvent(tableModel,0,data.length-1, SOURCE_COLUMN));
+         table.tableChanged(new TableModelEvent(tableModel));
          this.setCodeHighlighting(saved);
       }
      
@@ -859,13 +866,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                     isSelected, hasFocus, row, column);
             cell.setFont(Globals.getSettings().getEditorFont());
             cell.setHorizontalAlignment(SwingConstants.RIGHT);
-            if (row%2==0) {
-               cell.setBackground( Globals.getSettings().getColorSettingByPosition(Settings.EVEN_ROW_BACKGROUND) );
-               cell.setForeground( Globals.getSettings().getColorSettingByPosition(Settings.EVEN_ROW_FOREGROUND) );
-            } 
-            else {
-               cell.setBackground( Globals.getSettings().getColorSettingByPosition(Settings.ODD_ROW_BACKGROUND) );
-               cell.setForeground( Globals.getSettings().getColorSettingByPosition(Settings.ODD_ROW_FOREGROUND) );				
+            
+            TextSegmentWindow textSegment = Globals.getGui().getMainPane().getExecutePane().getTextSegmentWindow();
+            Settings settings = Globals.getSettings();
+            boolean highlighting = textSegment.getCodeHighlighting();
+         	
+            if (highlighting && textSegment.getIntCodeAddressAtRow(row) == highlightAddress) {
+               if (mars.simulator.Simulator.inDelaySlot() || textSegment.inDelaySlot) {
+                  cell.setBackground( settings.getColorSettingByPosition(Settings.TEXTSEGMENT_DELAYSLOT_HIGHLIGHT_BACKGROUND) );
+                  cell.setForeground( settings.getColorSettingByPosition(Settings.TEXTSEGMENT_DELAYSLOT_HIGHLIGHT_FOREGROUND) );
+                  } 
+               else {
+                  cell.setBackground( settings.getColorSettingByPosition(Settings.TEXTSEGMENT_HIGHLIGHT_BACKGROUND) );
+                  cell.setForeground( settings.getColorSettingByPosition(Settings.TEXTSEGMENT_HIGHLIGHT_FOREGROUND) );
+                  }
             }
             return cell;
          }  
@@ -936,7 +950,27 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                }
                else {
                   setForeground(table.getForeground());
-                  setBackground(table.getBackground());
+                  Color alternate = UIManager.getColor("Table.alternateRowColor");
+                  if (alternate != null && row % 2 != 0) {
+                      setBackground(alternate);
+                  } else {
+                      setBackground(table.getBackground());
+                  }
+               }
+
+               TextSegmentWindow textSegment = Globals.getGui().getMainPane().getExecutePane().getTextSegmentWindow();
+               Settings settings = Globals.getSettings();
+               boolean highlighting = textSegment.getCodeHighlighting();
+
+               if (highlighting && textSegment.getIntCodeAddressAtRow(row) == highlightAddress) {
+                  if (mars.simulator.Simulator.inDelaySlot() || textSegment.inDelaySlot) {
+                     setBackground(settings.getColorSettingByPosition(Settings.TEXTSEGMENT_DELAYSLOT_HIGHLIGHT_BACKGROUND));
+                     setForeground(settings.getColorSettingByPosition(Settings.TEXTSEGMENT_DELAYSLOT_HIGHLIGHT_FOREGROUND));
+                  } 
+                  else {
+                     setBackground(settings.getColorSettingByPosition(Settings.TEXTSEGMENT_HIGHLIGHT_BACKGROUND));
+                     setForeground(settings.getColorSettingByPosition(Settings.TEXTSEGMENT_HIGHLIGHT_FOREGROUND));
+                  }
                }
             
                setEnabled(table.isEnabled() && breakpointsEnabled);
