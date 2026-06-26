@@ -411,9 +411,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   samples[count] = new JLabel();
                   samples[count].setOpaque(true);
                   samples[count].setHorizontalAlignment(SwingConstants.CENTER);
-                  samples[count].setBorder(BorderFactory.createLineBorder(Color.black)); 
                   samples[count].setText(sampleText[i]);
-                  samples[count].setBackground(Color.WHITE);
+                  samples[count].setBackground(javax.swing.UIManager.getColor("TextField.background"));
                   samples[count].setToolTipText(SAMPLE_TOOL_TIP_TEXT);
                   foregroundButtons[count] = new ColorSelectButton(); // defined in SettingsHighlightingAction
                   foregroundButtons[count].addActionListener(new ForegroundChanger(count));
@@ -441,7 +440,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             JPanel buttonsPanel = new JPanel(new GridLayout(syntaxStyleIndex.length, 4, gridVGap, gridHGap));
          	// column 1: label,  column 2: preview, column 3: foreground chooser, column 4/5: bold/italic, column 6: default
             for (int i=0; i<syntaxStyleIndex.length; i++) {
-               labelPreviewPanel.add(new JLabel(label[i], SwingConstants.RIGHT));		
+               JLabel uiLabel = new JLabel(label[i], SwingConstants.RIGHT);
+               uiLabel.setBorder(new javax.swing.border.EmptyBorder(0, 0, 0, com.formdev.flatlaf.util.UIScale.scale(8)));
+               labelPreviewPanel.add(uiLabel);		
                labelPreviewPanel.add(samples[i]);
                buttonsPanel.add(foregroundButtons[i]);
                buttonsPanel.add(bold[i]);
