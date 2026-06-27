@@ -624,8 +624,14 @@
          }
       }
    
-       protected void paintHighlight(Graphics gfx, int line, int y)
-      {//System.out.println("paintHighlight "+ (++count));
+       protected void paintHighlight(Graphics gfx, int line, int y) {
+         if (lineHighlight && line == textArea.getCaretLine()) {
+            int height = fm.getHeight();
+            int highlightY = y + fm.getLeading() + fm.getMaxDescent();
+            gfx.setColor(lineHighlightColor);
+            gfx.fillRect(0, highlightY, getWidth(), height);
+         }
+
          if(line >= textArea.getSelectionStartLine()
          && line <= textArea.getSelectionEndLine())
             paintLineHighlight(gfx,line,y);
@@ -642,23 +648,15 @@
    
        protected void paintLineHighlight(Graphics gfx, int line, int y)
       {//System.out.println("paintLineHighlight "+ (++count));
-         int height = fm.getHeight();
-         y += fm.getLeading() + fm.getMaxDescent();
-      
          int selectionStart = textArea.getSelectionStart();
          int selectionEnd = textArea.getSelectionEnd();
       
-         if(selectionStart == selectionEnd)
-         {
-            if(lineHighlight)
-            {
-               gfx.setColor(lineHighlightColor);
-               gfx.fillRect(0,y,getWidth(),height);
-            }
-         }
-         else
-         {
-            gfx.setColor(selectionColor);
+         if(selectionStart == selectionEnd) return;
+
+         int height = fm.getHeight();
+         y += fm.getLeading() + fm.getMaxDescent();
+      
+         gfx.setColor(selectionColor);
          
             int selectionStartLine = textArea.getSelectionStartLine();
             int selectionEndLine = textArea.getSelectionEndLine();
@@ -705,8 +703,6 @@
          // "inlined" min/max()
             gfx.fillRect(x1 > x2 ? x2 : x1,y,x1 > x2 ?
                (x1 - x2) : (x2 - x1),height);
-         }
-      
       }
    
        protected void paintBracketHighlight(Graphics gfx, int line, int y)

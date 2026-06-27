@@ -226,11 +226,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
 
       public String getLineNumbersList(javax.swing.text.Document doc, int currentLine) {
-         // Compute the highlight color (same as table alternate row color set globally)
-         java.awt.Color hlColor = javax.swing.UIManager.getColor("Table.alternateRowColor");
-         String hlHex = (hlColor != null)
-               ? String.format("%02x%02x%02x", hlColor.getRed(), hlColor.getGreen(), hlColor.getBlue())
-               : null;
+         // Compute the highlight color to exactly match TextAreaDefaults lineHighlightColor
+         java.awt.Color textFieldBg = javax.swing.UIManager.getColor("TextField.background");
+         java.awt.Color hlColor = null;
+         if (textFieldBg != null) {
+            int r = Math.min(255, textFieldBg.getRed()   + 18);
+            int g = Math.min(255, textFieldBg.getGreen() + 18);
+            int b = Math.min(255, textFieldBg.getBlue()  + 18);
+            hlColor = new java.awt.Color(r, g, b);
+         } else {
+            hlColor = new java.awt.Color(0xeeeeee);
+         }
+         String hlHex = String.format("%02x%02x%02x", hlColor.getRed(), hlColor.getGreen(), hlColor.getBlue());
 
          StringBuilder sb = new StringBuilder("<html><table cellpadding=0 cellspacing=0 border=0>");
          int lineCount = doc.getDefaultRootElement().getElementCount();
@@ -239,9 +246,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             String lineStr = Integer.toString(i);
             int leadingSpaces = digits - lineStr.length();
             String num = (leadingSpaces == 0)
-                  ? lineStr + "&nbsp;"
-                  : spaces.substring(0, leadingSpaces * 6) + lineStr + "&nbsp;";
-            if (hlHex != null && i == currentLine + 1) {
+                  ? "&nbsp;&nbsp;" + lineStr + "&nbsp;&nbsp;"
+                  : "&nbsp;&nbsp;" + spaces.substring(0, leadingSpaces * 6) + lineStr + "&nbsp;&nbsp;";
+            if (i == currentLine + 1) {
                sb.append("<tr bgcolor=#").append(hlHex).append("><td>").append(num).append("</td></tr>");
             } else {
                sb.append("<tr><td>").append(num).append("</td></tr>");
