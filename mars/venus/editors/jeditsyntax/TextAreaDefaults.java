@@ -79,9 +79,9 @@
          // current line highlight
          Color textFieldBg = UIManager.getColor("TextField.background");
          if (textFieldBg != null) {
-            int r = Math.min(255, textFieldBg.getRed()   + 18);
-            int g = Math.min(255, textFieldBg.getGreen() + 18);
-            int b = Math.min(255, textFieldBg.getBlue()  + 18);
+            int r = Math.min(255, textFieldBg.getRed()   + 12);
+            int g = Math.min(255, textFieldBg.getGreen() + 12);
+            int b = Math.min(255, textFieldBg.getBlue()  + 12);
             DEFAULTS.lineHighlightColor = new Color(r, g, b);
          } else {
             DEFAULTS.lineHighlightColor = new Color(0xeeeeee);

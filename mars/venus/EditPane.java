@@ -230,9 +230,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          java.awt.Color textFieldBg = javax.swing.UIManager.getColor("TextField.background");
          java.awt.Color hlColor = null;
          if (textFieldBg != null) {
-            int r = Math.min(255, textFieldBg.getRed()   + 18);
-            int g = Math.min(255, textFieldBg.getGreen() + 18);
-            int b = Math.min(255, textFieldBg.getBlue()  + 18);
+            int r = Math.min(255, textFieldBg.getRed()   + 12);
+            int g = Math.min(255, textFieldBg.getGreen() + 12);
+            int b = Math.min(255, textFieldBg.getBlue()  + 12);
             hlColor = new java.awt.Color(r, g, b);
          } else {
             hlColor = new java.awt.Color(0xeeeeee);
